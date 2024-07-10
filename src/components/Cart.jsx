@@ -9,7 +9,6 @@ const Cart = () => {
   let dispatch = useDispatch();
   let { theme } = useContext(ThemeStore);
 
-
   const containerClass = theme === 'dark'
     ? 'overflow-x-auto p-6 bg-slate-800 r shadow-md text-white'
     : 'overflow-x-auto p-6 bg-gray-100  shadow-md text-gray-900';
@@ -28,46 +27,54 @@ const Cart = () => {
 
   return (
     <div className={containerClass}>
-      <table className={tableClass}>
-        <thead className={theadClass}>
-          <tr>
-            <th className="py-3 px-6 text-left">Name</th>
-            <th className="py-3 px-6 text-left">Rating</th>
-            <th className="py-3 px-6 text-left">
-              <div className="flex items-center gap-2">
-                <span
-                  className="cursor-pointer hover:text-blue-300 transition-colors"
-                  onClick={() => dispatch(sortAscending())}
-                >
-                  🔼
-                </span>
-                <span className="font-semibold">Price</span>
-                <span
-                  className="cursor-pointer hover:text-blue-300 transition-colors"
-                  onClick={() => dispatch(sortDescending())}
-                >
-                  🔽
-                </span>
-              </div>
-            </th>
-            <th className="py-3 px-6 text-left">Quantity</th>
-            <th className="py-3 px-6 text-left"></th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-gray-700">
-          {cartItems.map((cartObj) => (
-            <CartRow key={cartObj.dataObj.id} cartObj={cartObj} />
-          ))}
-        </tbody>
-      </table>
-      <div className="mt-4 text-center">
-        <button
-          className={buttonClass}
-          onClick={() => dispatch(clearCart())}
-        >
-          Clear Cart
-        </button>
-      </div>
+      {cartItems.length === 0 ? (
+        <div className="text-center py-8">
+          <p className="text-xl text-orange-600">Your cart is empty. Please add items to your cart.</p>
+        </div>
+      ) : (
+        <>
+          <table className={tableClass}>
+            <thead className={theadClass}>
+              <tr>
+                <th className="py-3 px-6 text-left">Name</th>
+                <th className="py-3 px-6 text-left">Rating</th>
+                <th className="py-3 px-6 text-left">
+                  <div className="flex items-center gap-2">
+                    <span
+                      className="cursor-pointer hover:text-blue-300 transition-colors"
+                      onClick={() => dispatch(sortAscending())}
+                    >
+                      🔼
+                    </span>
+                    <span className="font-semibold">Price</span>
+                    <span
+                      className="cursor-pointer hover:text-blue-300 transition-colors"
+                      onClick={() => dispatch(sortDescending())}
+                    >
+                      🔽
+                    </span>
+                  </div>
+                </th>
+                <th className="py-3 px-6 text-left">Quantity</th>
+                <th className="py-3 px-6 text-left"></th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-700">
+              {cartItems.map((cartObj) => (
+                <CartRow key={cartObj.dataObj.id} cartObj={cartObj} />
+              ))}
+            </tbody>
+          </table>
+          <div className="mt-4 text-center">
+            <button
+              className={buttonClass}
+              onClick={() => dispatch(clearCart())}
+            >
+              Clear Cart
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 };
