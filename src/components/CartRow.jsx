@@ -9,7 +9,6 @@ const CartRow = ({ cartObj }) => {
   let { theme } = useContext(ThemeStore);
   let { thumbnail, price, rating, title, id } = dataObj;
 
-  // Conditional classes based on the theme
   const rowClass = theme === 'dark'
     ? 'bg-gray-900 text-gray-300 hover:bg-gray-800 transition-colors'
     : 'bg-white text-gray-800 hover:bg-gray-50 transition-colors';
@@ -40,14 +39,14 @@ const CartRow = ({ cartObj }) => {
             className="cursor-pointer text-blue-400 hover:text-blue-500 transition-colors"
             onClick={() => dispatch(incrementQuantity(id))}
           >
-            🔼
+           <i class="ri-arrow-up-circle-fill text-3xl"></i>
           </span>
           <span className="text-lg font-medium">{quantity}</span>
           <span
             className="cursor-pointer text-blue-400 hover:text-blue-500 transition-colors"
             onClick={() => dispatch(decrementQuantity(id))}
           >
-            🔽
+        <i class="ri-arrow-down-circle-fill text-3xl"></i>
           </span>
         </div>
       </td>

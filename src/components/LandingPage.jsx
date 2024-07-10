@@ -12,7 +12,7 @@ const products = [
     title: 'Groceries',
     description: 'Fresh and high-quality groceries for your daily needs.',
     icon: <ShoppingCartOutlined />,
-    bgColor: '#bef264',
+    bgColor: '#d9f99d',
     textColor: '#333',
   },
   {
@@ -26,7 +26,7 @@ const products = [
     title: 'Furniture',
     description: 'Stylish and comfortable furniture for your home.',
     icon: <HomeOutlined />,
-    bgColor: '#fcd34d',
+    bgColor: '#fde68a',
     textColor: '#1890ff',
   },
 ];
