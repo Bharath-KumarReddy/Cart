@@ -1,15 +1,13 @@
 import React from 'react'
+import loader from "./loader.gif";
 
 const Shimmer = () => {
   return (
 
-   <div className=' h-screen flex justify-center'>
+   <div className='w-screen h-screen flex justify-center items-center bg-black'>
 
+    <img src={loader} alt='Loading....'/>
 
-<span className="loading loading-ball loading-lg"></span>
-<span className="loading loading-ball loading-sm"></span>
-<span className="loading loading-ball loading-md"></span>
-<span className="loading loading-ball loading-lg"></span>
 
 
    </div>

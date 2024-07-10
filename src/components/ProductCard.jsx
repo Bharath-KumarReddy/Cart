@@ -1,43 +1,50 @@
-import React from 'react'
-import { useNavigate } from 'react-router';
-const ProductCard = ({fobj}) => {
-   const Navigate = useNavigate();
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { ThemeStore } from "../context/ThemeContext.jsx";
+import { useDispatch } from "react-redux";
+import { addCart } from "../utility/Store/cartSlice.jsx";
 
-
-   const handleProduct = () => {
-
-    const {id} = fobj;
+let ProductCard = ({ obj }) => {
+  let { title, thumbnail, rating, price, category, id } = obj;
+  let {theme } = useContext(ThemeStore);
+  let Navigate = useNavigate();
+  let handleClick = () => {
     Navigate(`/product/${id}`);
-   }
+  };
 
+  let dispatch = useDispatch();
+  let handleAddbtn = (event) => {
 
-   const handleAdd = (e) => {
-    console.log("added success")
-    e.stopPropagation();
-   }
+    dispatch(addCart(obj));
+    
+    event.stopPropagation()
+  }
 
+  let darkTheme = "card w-96 bg-base-300 shadow-xl m-3 ";
+  let lightTheme = "card w-96 bg-gray-300 shadow-xl m-3 "
   return (
-    <div className="card w-96 bg-gray-100 shadow-xl mb-10 mt-9 mr-10" onClick={handleProduct}>
-    <figure>
-      <img
-        src={fobj.thumbnail}
-        alt="Shoes"
-        className='bg-zinc-400 rounded-2xl'
-      />
-    </figure>
-    <div className="card-body">
-      <h2 className="card-title">
-        {fobj.title}
-      </h2>
-      {/* <p>{fobj.description.slice(0,50)}</p> */}
-      <div className="card-actions justify-between items-center">
-        <div className="badge badge-secondary">{fobj.category}</div>
-        <div className="badge badge-outline">{fobj.rating} *</div>
-        <div className="badge badge-outline">{fobj.price} RS</div>
-        <button className=" bg-black  text-white rounded-2xl p-3 cursor-pointer ..." onClick={handleAdd}>Add</button>
+    <div className={theme == "light" ? lightTheme : darkTheme} onClick={handleClick}>
+      
+      <figure>
+        <img
+          className="bg-zinc-400 h-[90%] rounded-2xl cursor-pointer" 
+          src={thumbnail}
+          alt="Shoes"
+        />
+      </figure>
+      <div className="card-body">
+        <h2 className="card-title">{title}</h2>
+
+        <div className="card-actions justify-between items-center ">
+          <div className="badge badge-secondary bg-orange-700">{category}</div>
+          <div className="badge badge-secondary bg-orange-800">{rating}</div>
+
+          <p className=" p-1"> {price} $</p>
+          <button className="bg-black text-white p-4 rounded-2xl" onClick={handleAddbtn}> Add </button>
+        </div>
       </div>
     </div>
-  </div>
-  )
-}
-export default ProductCard
+  );
+};
+
+export default ProductCard;

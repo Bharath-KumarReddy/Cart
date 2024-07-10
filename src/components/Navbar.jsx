@@ -1,45 +1,32 @@
-import React,{useContext} from "react";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
 import { ThemeStore } from "../context/ThemeContext";
-const Navbar = () => {
-  let {theme,setTheme} = useContext(ThemeStore);
-  // console.log(obj);
+import {useSelector } from 'react-redux'
 
-  let darkTheme = 'navbar bg-slate-300'
-  let lightTheme = 'navbar bg-black'
+let Navbar = () => {
 
-  let  darki = 'text-red-900 text-2xl btn btn-ghost'
-  let lighi= 'text-indigo-500 text-2xl btn btn-ghost'
-
-
-  const handleclick = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    setTheme(newTheme);
-    if(newTheme == 'light'){
-      localStorage.setItem('theme', 'light');
-    }else {
-      localStorage.setItem('theme', 'dark');
-    }
-  }
-
+  let {theme , setTheme } = useContext(ThemeStore);
+    let cartItems = useSelector((store)=> store.cart.items)
+   let darkTheme = 'navbar bg-black';
+   let lightTheme = 'navbar bg-slate-300'
   return (
     <>
-      <div className={theme == 'light' ? lightTheme : darkTheme}>
+   
+      <div className={theme=='dark'? darkTheme : lightTheme}> 
         <div className="flex-1">
-          <Link to="/" className={theme == 'light' ? lighi : darki}>
-            MYCart
+          <Link to="/" className="btn btn-ghost text-xl  text-indigo-500">
+            YOCart
           </Link>
         </div>
         <div className="flex-none">
-          <ul className="menu menu-horizontal px-1 text-white">
-            <li className=" mr-5 bg-violet-500 hover:bg-violet-600 active:bg-violet-700 focus:outline-none rounded-2xl focus:ring focus:ring-violet-300 ...">
-              <Link to="/cart">Cart</Link>
+          <ul className="menu menu-horizontal px-1 text-indigo-500 text-2xl font-bold  ">
+            <li>
+              <Link to="/cart">Cart <sup className="text-xl text-orange-600 "> {cartItems.length }</sup></Link>
             </li>
-            <li className="mr-5 bg-violet-500 hover:bg-violet-600 active:bg-violet-700 focus:outline-none rounded-2xl focus:ring focus:ring-violet-300 ...">
-              {/* <a href="/about">About</a> */}
+            <li>
               <Link to="/about">About</Link>
             </li>
-            <li className="mr-5 ">
+            <li>
               <label className="flex cursor-pointer gap-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -59,7 +46,11 @@ const Navbar = () => {
                   type="checkbox"
                   value="synthwave"
                   className="toggle theme-controller"
-                  onClick={handleclick}
+                  onClick={ ()=>{
+                    setTheme(theme=='light'?'dark':'light')
+                    // localStorage.setItem("Theme", theme) // Not working 
+                    localStorage.setItem("Theme", theme=='light'?'dark':'light') //Working 
+                  } }
                 />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -82,5 +73,5 @@ const Navbar = () => {
     </>
   );
 };
-export default Navbar;
 
+export default Navbar;

@@ -1,5 +1,5 @@
 import React ,{useState,useEffect}from 'react'
-const GetSingleProduct = (id) => {
+const useCallSingleProductApi = (id) => {
     const [card, setCard] = useState([]);
     const getData = async () => {
     const data = await fetch(`https://dummyjson.com/products/${id}`);
@@ -9,6 +9,7 @@ const GetSingleProduct = (id) => {
   useEffect(() => {
     getData();
   }, []);
+  console.log(card);
   return card;
 }
-export default GetSingleProduct
+export default useCallSingleProductApi

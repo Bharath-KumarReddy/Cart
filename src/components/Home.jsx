@@ -1,104 +1,125 @@
-import React, { useState,useEffect ,useContext} from "react";
-// import products from "../Data"; // Assuming products is imported correctly
-import ProductCard from "./ProductCard";
+import { useState, useEffect,useContext} from "react";
+import ProductCard from "./ProductCard.jsx";
 import Shimmer from "./Shimmer";
-import { ThemeStore } from "../context/ThemeContext";
-const Home = () => {
-  const [actual, setActual] = useState([]);
-  const [product, setProduct] = useState([]);
-  const [value, setValue] = useState(""); // Initialize value state
+import Loading from "./loader.gif"
+import { ThemeStore } from "../context/ThemeContext.jsx";
+import AddedProductInCart from "../utility/Store/AddedProductInCart.jsx"
+import { useSelector } from "react-redux";
 
-  let {theme} = useContext(ThemeStore);
 
-  const getData = async () => {
-    const data = await fetch('https://dummyjson.com/products');
-    const obj  = await data.json();
-    setProduct(obj.products);
-    setActual(obj.products);
-    console.log(obj);
+let Home = () => {
+  let [allProducts, setAllProducts] = useState([]);
+  let [productData, setProductData] = useState([]);
+  let [searchQuery, setSearchQuery] = useState("");
+
+  let { theme } = useContext(ThemeStore);
+
+  let getData = async () => {
+    let data = await fetch("https://dummyjson.com/products");
+    let obj = await data.json();
+    setAllProducts(obj.products);
+    setProductData(obj.products);
+  };
+
+  let AddedComponent = AddedProductInCart(ProductCard)
+  
+  let cartItems = useSelector((store=> store.cart.items ))
+
+
+  let isPresentIncart = (id)=>{
+    let objIdx = cartItems.findIndex((cartObj)=> cartObj.dataObj.id == id );
+    return objIdx
   }
 
- useEffect(() => {
+  useEffect(() => {
     getData();
- },[])
+  }, []);
 
+  if (allProducts.length == 0) {
+    return <Shimmer></Shimmer>
+  }
 
-
-
-  const handleRating = (e) => {
-    e.preventDefault();
-    let temp = actual.filter(obj => obj.rating >= 4);
-    setProduct(temp);
+  let handleRating = () => {
+    let filteredArray = allProducts.filter((obj) => {
+      return obj.rating > 4;
+    });
+    setProductData(filteredArray);
   };
 
-  const handleGrocery = (e) => {
-    e.preventDefault();
-    let temp = actual.filter(obj => obj.category === "groceries");
-    setProduct(temp);
+  let handleCategory = (category) => {
+    let filteredArray = allProducts.filter((obj) => {
+      return obj.category == category;
+    });
+    setProductData(filteredArray);
   };
 
-  const handleFurniture = (e) => {
-    e.preventDefault();
-    let temp = actual.filter(obj => obj.category === "furniture");
-    setProduct(temp);
+  let handleSearch = () => {
+    let filteredArray = allProducts.filter((obj) => {
+      return obj.title.toLowerCase().includes(searchQuery.toLowerCase().trim());
+    });
+
+    setProductData(filteredArray);
+    setSearchQuery("");
   };
 
-  const handleBeauty = (e) => {
-    e.preventDefault();
-    let temp = actual.filter(obj => obj.category === "beauty");
-    setProduct(temp);
-  };
+  let darkTheme = "bg-slate-800  min-h-[91vh] w-screen  flex  flex-col ";
+  let lightTheme = " min-h-[91vh] w-screen  flex  flex-col  bg-gray-200";
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-
-    if(value.length ==0){
-     return setProduct(actual);
-    }
-    let temp = product.filter(obj =>
-      obj.title.toLowerCase().includes(value.toLowerCase())
-    );
-    setProduct(temp);
-    setValue("");
-  };
-
-  if(product.length ==0) return <Shimmer></Shimmer>
-
-
-  let dark = "bg-slate-800 border-2 border-black min-h-[91vh] w-screen bg-base-300 flex flex-wrap justify-around"
-  let light= "bg-gray-300 border-2 border-black min-h-[91vh] w-screen bg-base-300 flex flex-wrap justify-around"
   return (
-    <div className={theme == "light" ? dark : light}>
-      <div className="utility flex justify-around w-screen mt-5">
-        <button className="btn btn-error" onClick={handleRating}>
-          Top Rating
+    <div className={theme == "light" ? lightTheme : darkTheme}>
+      <div className="utility flex w-100 justify-around mt-2">
+        {/* {console.log("render called ")} */}
+        <button className="btn btn-primary btn-lg" onClick={handleRating}>
+          Top-Rating
         </button>
-        <button className="btn btn-error" onClick={handleGrocery}>
-          Grocery
+
+        <button
+          className="btn btn-primary btn-lg"
+          onClick={() => {
+            handleCategory("furniture");
+          }}
+        >
+          {" "}
+          Furniture{" "}
         </button>
+
         <div className="searchBar">
           <input
             type="text"
-            placeholder="filter..."
-            className="p-3 rounded-2xl border-none"
-            value={value}
-            onChange={(e) => setValue(e.target.value.trim())}
-          />
-          <button className="btn btn-success ml-1 text-white" onClick={handleSearch}>
+            className="h-11 p-2 rounded-2xl btn-lg" 
+            value={searchQuery}
+            onChange={(event) => {
+              setSearchQuery(event.target.value);
+            }}
+          ></input>
+          <button className="btn btn-success mx-2 btn-lg" onClick={handleSearch}>
             Search
           </button>
         </div>
-        <button className="btn btn-error" onClick={handleFurniture}>
-          Furniture
+
+        <button
+          className="btn btn-primary btn-lg"
+          onClick={() => {
+            handleCategory("beauty");
+          }}
+        >
+          Beauty{" "}
         </button>
-        <button className="btn btn-error" onClick={handleBeauty}>
-          Beauty
+        <button
+          className="btn btn-primary btn-lg"
+          onClick={() => {
+            handleCategory("groceries");
+          }}
+        >
+          Grocery
         </button>
       </div>
-      {product.map((card, i) => (
-        <ProductCard fobj={card} key={i} />
-      ))}
+
+      <div className="flex flex-wrap justify-around">
+        {productData.map((obj) => <>{isPresentIncart(obj.id)!=-1 ?<AddedComponent obj={obj} key={obj.id}></AddedComponent> :  <ProductCard obj={obj} key={obj.id}></ProductCard>}</>)}
+      </div>
     </div>
   );
 };
+
 export default Home;
