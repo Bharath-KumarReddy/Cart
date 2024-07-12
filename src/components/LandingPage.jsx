@@ -70,7 +70,7 @@ const LandingPage = () => {
         <Title level={2} className="text-center text-3xl font-bold mb-12">
         <span className={theme == 'dark' ? "text-white" : ""}>Explore Our Categories</span>
         </Title>
-        <Row gutter={16} justify="center">
+        <Row gutter={16} justify="center"  onClick={handleclick} className='cursor-pointer'>
           {products.map((product, index) => (
             <Col span={8} key={index}>
               <motion.div
@@ -82,10 +82,11 @@ const LandingPage = () => {
                 <div
                   className="text-4xl mb-4"
                   style={{ color: product.textColor, backgroundColor: product.bgColor, padding: '1rem', borderRadius: '50%' }}
+                 
                 >
                   {product.icon}
                 </div>
-                <Title level={4} className="text-lg font-semibold mb-2">
+                <Title level={4} className="text-lg font-semibold mb-2 "  >
                   {product.title}
                 </Title>
                 <Paragraph>{product.description}</Paragraph>
@@ -97,10 +98,11 @@ const LandingPage = () => {
 
       {/* Why Choose Us Section */}
       <motion.div
-        className={`py-16 px-4 ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}
+        className={`py-16 px-4 ${theme === 'dark' ? 'bg-gray-800 cursor-pointer' : 'bg-white cursor-pointer'}`}
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
+        onClick={handleclick}
       >
         <Title level={2} className="text-center text-3xl font-bold mb-12">
         <span className={theme == 'dark' ? "text-white" : ""}>Explore Our Categories</span>
