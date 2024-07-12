@@ -9,7 +9,7 @@ const About = () => {
   return (
     <div className={`flex flex-col items-center p-12 min-h-screen ${theme === 'dark' ? 'bg-slate-800' : 'bg-gray-100'}`}>
       <motion.div
-        className={`max-w-3xl text-center ${theme === 'dark' ? 'bg-gray-900 text-gray-200' : 'bg-white shadow-lg text-gray-800'} shadow-lg rounded-lg p-8`}
+        className={`max-w-3xl text-center ${theme === 'dark' ? 'bg-gray-900 text-gray-200 border-4 border-t-indigo-500 border-l-orange-600  border-r-orange-600 border-b-indigo-700 ...' : 'bg-white shadow-lg text-gray-800 border-4 border-t-red-700 border-l-lime-600 border-b-red-700 border-r-lime-600 ...'} shadow-lg rounded-lg p-8`}
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}

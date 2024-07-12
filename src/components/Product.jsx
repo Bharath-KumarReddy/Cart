@@ -48,13 +48,13 @@ const Product = () => {
   let darktitle = "card-title text-white mx-auto text-2xl"
   let lighttitle = "card-title text-black mx-auto text-2xl"
 
-  let lightimage = "bg-zinc-400 h-[100%] rounded-2xl cursor-pointer"
+  let lightimage = "bg-zinc-400 h-[100%] rounded-2xl cursor-pointer tansition-all duration-500 hover:scale-110"
   return (
     <div className="h-[92vh] w-screen bg-base-200 pt-6">
-      <div className="card card-side bg-base-100 shadow-xl w-1/2 mx-auto ">
-      { isPresentIncart() !=-1 ?  <p  className="bg-green-600 rounded-2xl  absolute text-black p-1 top-3 left-3 font-bold"> Added in Cart  </p> : null }
+      <div className="card card-side bg-base-100 shadow-xl w-1/2 mx-auto  transition-all duration-700 hover:scale-110 hover:shadow-amber-500">
+      { isPresentIncart() !=-1 ?  <p  className="bg-green-600 rounded-2xl  absolute text-black p-1 top-3 left-3 font-bold "> Added in Cart  </p> : null }
       <figure>
-          <img src={thumbnail} alt="product"  className={theme == 'light' ? lightimage : ""}/>
+          <img src={thumbnail} alt="product"  className={theme == 'light' ? lightimage : "tansition-all duration-500 hover:scale-110 cursor-pointer"}/>
         </figure>
         <div className={theme == 'light' ? lighti : darki}>
           <h2 className={theme == 'light' ? lighttitle : darktitle} >{title}</h2>
