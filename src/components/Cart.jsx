@@ -3,6 +3,7 @@ import CartRow from './CartRow';
 import { useSelector, useDispatch } from 'react-redux';
 import { sortAscending, sortDescending, clearCart } from '../utility/Store/cartSlice';
 import { ThemeStore } from '../context/ThemeContext';
+import { Link } from 'react-router-dom';
 
 const Cart = () => {
   let cartItems = useSelector((store) => store.cart.items);
@@ -29,7 +30,7 @@ const Cart = () => {
     <div className={containerClass}>
       {cartItems.length === 0 ? (
         <div className="text-center py-8">
-          <p className="text-xl text-orange-600">Your cart is empty. Please add items to your cart.</p>
+          <p className="text-xl text-orange-600">Your cart is empty. Please add items to your cart <button className='btn btn-secondary btn-sm'><Link to="/home">Add</Link></button></p>
         </div>
       ) : (
         <>
