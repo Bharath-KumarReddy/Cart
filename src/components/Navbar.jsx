@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { ThemeStore } from "../context/ThemeContext";
 import {useSelector } from 'react-redux'
 
+import pic from "./store.png"
 let Navbar = () => {
 
   let {theme , setTheme } = useContext(ThemeStore);
@@ -14,14 +15,18 @@ let Navbar = () => {
    
       <div className={theme=='dark'? darkTheme : lightTheme}> 
         <div className="flex-1">
-          <Link to="/" className="btn btn-ghost text-xl  text-indigo-500">
+        <i class="ri-shopping-cart-fill text-5xl text-orange-600 ">
+        </i>
+        <Link to="/" className=" text-2xl  text-indigo-500 ml-2">
             YOCart
           </Link>
+          
         </div>
         <div className="flex-none">
           <ul className="menu menu-horizontal px-1 text-indigo-500 text-2xl font-bold  ">
             <li>
-              <Link to="/cart">Cart <sup className="text-xl text-orange-600 "> {cartItems.length }</sup></Link>
+              <Link to="/cart"><i class="ri-shopping-cart-fill"></i> <sup className="text-xl text-orange-600 "> {cartItems.length }</sup></Link>
+              
             </li>
             <li>
               <Link to="/about">About</Link>
